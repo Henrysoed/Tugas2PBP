@@ -108,6 +108,15 @@ class Product(models.Model):
 Pastikan repository proyek sudah berada pada github dan bersifat public. Selanjutnya, pada adaptable, pilih opsi `deploy a new app`. Pilih repository sesuai proyek yang akan dideploy. Kemudian `Python App Template`. Selanjutnya adalah opsi database, sementara bisa menggunakan `PostgreSQL`. Sesuaikan versi python dengan versi lokal, `python --version` pada terminal lokal untuk melihat versi. Dan masukan `python manage.py migrate && gunicorn NAMA_PROYEK.wsgi` pada `Start Command`. Tentukan nama applikasi dan checklist `HTTP Listener on PORT`.
 
 ## Bagan Request Client ke Web Applikasi Berbasis Django
+![Bagan](doc/bagan_django.png)
+
+1. Seorang pengguna meminta browsernya untuk mengakses situs yang menggunakan Django sebagai basisnya
+2. Browser akan mengirimkan permintaan HTTP (HTTP Request) untuk halaman web ke server aplikasi
+3. Permintaan ini akan mencapai routing yang diatur dalam file 'urls.py', yang akan mencari pola URL yang sesuai dengan permintaan dari pengguna.
+4. Setelah pola URL ditemukan, Django akan menjalankan fungsi yang terkait dalam file views.py yang telah terhubung dengan URL tersebut.
+5. File views.py dapat melakukan berbagai logika dan operasi terhadap basis data yang telah didefinisikan dalam struktur model yang ada dalam file 'models.py'.
+6. Setelah operasi selesai, 'views.py' akan mengirimkan halaman web yang diminta oleh pengguna dalam format HTML, yang tersimpan dalam direktori 'templates'.
+7. Browser pengguna kemudian akan merender HTML yang diterima sebagai respons (HTTP Response) dari server Django.
 
 ## Mengapa menggunakan Virtual Environment
 Virtual environment digunakan dalam pengembangan aplikasi web berbasis Django untuk memisahkan dan mengisolasi dependensi proyek yang berbeda, mencegah konflik antarversi Python dan paket, serta memungkinkan manajemen dependensi yang lebih baik. Meskipun mungkin memungkinkan untuk membuat aplikasi Django tanpa virtual environment, penggunaannya sangat disarankan untuk menjaga kebersihan dan portabilitas kode proyek.
