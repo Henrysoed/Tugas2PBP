@@ -1,3 +1,4 @@
+[Application Link](https://investment-portofolio-inventory.adaptable.app)
 # Langkah-langkah
 ## Menyiapkan Library yang diperlukan
 Membuat file 'requirements.txt' dengan isi
