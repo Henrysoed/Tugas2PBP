@@ -25,13 +25,13 @@ pip install -r requirements.txt
 
 ## 1. Membuat proyek Django
 
-Buat direktori baru bernama 'NAME' dengan menggunakan command 'django-admin createproject NAME'.
-Direktori ini akan berisi file 'manage.py'yang berisi script pyhton yang akan digunakan untuk mengatur proyek dan folder 'NAMA' yang berisi setting dan routing dari proyek. 
-Untuk menjalankan proyek, gunakan command 'python manage.py runserver'
+Buat direktori baru bernama `NAME` dengan menggunakan command `django-admin createproject NAME`.
+Direktori ini akan berisi file `manage.py` yang berisi script pyhton yang akan digunakan untuk mengatur proyek dan folder `NAMA` yang berisi setting dan routing dari proyek. 
+Untuk menjalankan proyek, gunakan command `python manage.py runserver`
 
 ## 2. Membuat aplikasi dengan nama main
 
-Buat applikasi bernama 'APPNAME' dengan menggunakan command 'python manage.py createapp APPNAME'. Lalu daftarkan applikasi yang telah dibuat kedalam 'settings.py' pada folder proyek dengan menambahkan 'APPNAME' pada bagian 'INSTALLED_APPS' sehingga seperti di bawah ini
+Buat applikasi bernama `APPNAME` dengan menggunakan command `python manage.py createapp APPNAME`. Lalu daftarkan applikasi yang telah dibuat kedalam `settings.py` pada folder proyek dengan menambahkan `APPNAME` pada bagian `INSTALLED_APPS` sehingga seperti di bawah ini
 ```python
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 ```
 
 ## 3. Mengonfigurasi Routing URL
-Melakukan koknfigurasi link 'APPNAME' dengan menambahkan command 'path('aplikasi/', include('main.urls'))' pada 'urls.py' yang terletak di direktori proyek sehingga seperti dibawah ini
+Melakukan koknfigurasi link `APPNAME` dengan menambahkan command `path('aplikasi/', include('main.urls'))` pada `urls.py` yang terletak di direktori proyek sehingga seperti dibawah ini
 ```python
 from django.contrib import admin
 from django.urls import path, include
@@ -107,21 +107,21 @@ class Product(models.Model):
 ## Melakukan deployment ke Adaptable
 Pastikan repository proyek sudah berada pada github dan bersifat public. Selanjutnya, pada adaptable, pilih opsi `deploy a new app`. Pilih repository sesuai proyek yang akan dideploy. Kemudian `Python App Template`. Selanjutnya adalah opsi database, sementara bisa menggunakan `PostgreSQL`. Sesuaikan versi python dengan versi lokal, `python --version` pada terminal lokal untuk melihat versi. Dan masukan `python manage.py migrate && gunicorn NAMA_PROYEK.wsgi` pada `Start Command`. Tentukan nama applikasi dan checklist `HTTP Listener on PORT`.
 
-## Bagan Request Client ke Web Applikasi Berbasis Django
+# Bagan Request Client ke Web Applikasi Berbasis Django
 ![Bagan](doc/bagan_django.png)
 
 1. Seorang pengguna meminta browsernya untuk mengakses situs yang menggunakan Django sebagai basisnya
 2. Browser akan mengirimkan permintaan HTTP (HTTP Request) untuk halaman web ke server aplikasi
-3. Permintaan ini akan mencapai routing yang diatur dalam file 'urls.py', yang akan mencari pola URL yang sesuai dengan permintaan dari pengguna.
-4. Setelah pola URL ditemukan, Django akan menjalankan fungsi yang terkait dalam file views.py yang telah terhubung dengan URL tersebut.
-5. File views.py dapat melakukan berbagai logika dan operasi terhadap basis data yang telah didefinisikan dalam struktur model yang ada dalam file 'models.py'.
-6. Setelah operasi selesai, 'views.py' akan mengirimkan halaman web yang diminta oleh pengguna dalam format HTML, yang tersimpan dalam direktori 'templates'.
+3. Permintaan ini akan mencapai routing yang diatur dalam file `urls.py`, yang akan mencari pola URL yang sesuai dengan permintaan dari pengguna.
+4. Setelah pola URL ditemukan, Django akan menjalankan fungsi yang terkait dalam file `views.py` yang telah terhubung dengan URL tersebut.
+5. File `views.py` dapat melakukan berbagai logika dan operasi terhadap basis data yang telah didefinisikan dalam struktur model yang ada dalam file `models.py`.
+6. Setelah operasi selesai, `views.py`akan mengirimkan halaman web yang diminta oleh pengguna dalam format HTML, yang tersimpan dalam direktori `templates`.
 7. Browser pengguna kemudian akan merender HTML yang diterima sebagai respons (HTTP Response) dari server Django.
 
-## Mengapa menggunakan Virtual Environment
+# Mengapa menggunakan Virtual Environment
 Virtual environment digunakan dalam pengembangan aplikasi web berbasis Django untuk memisahkan dan mengisolasi dependensi proyek yang berbeda, mencegah konflik antarversi Python dan paket, serta memungkinkan manajemen dependensi yang lebih baik. Meskipun mungkin memungkinkan untuk membuat aplikasi Django tanpa virtual environment, penggunaannya sangat disarankan untuk menjaga kebersihan dan portabilitas kode proyek.
 
-## Apa itu MVC, MVT, dan MVVM
-# 1. MVC (Model View Controller) adalah paradigma desain arsitektur yang memisahkan aplikasi menjadi tiga komponen utama yaitu model (data dan logika bisnis), view (tampilan), dan controller (pengontrol aliran data).
-# 2. MVT (Model-View-Template) adalah paradigma desain arsitektur yang merupakan variasi dari MVC yang digunakan dalam kerangka kerja Django, di mana model (data dan logika bisnis) tetap sama, view (tampilan) lebih berfokus pada presentasi data, dan template digunakan untuk memisahkan logika presentasi.
-# 3. MVVM (Model-View-ViewModel) adalah paradigma desain arsitektur yang memisahkan aplikasi menjadi tiga komponen utama yaitu model (data dan logika bisnis), view (tampilan), dan ViewModel (perantara antara Model dan View yang mengelola tampilan data dan logika presentasi).
+# Apa itu MVC, MVT, dan MVVM
+1. MVC (Model View Controller) adalah paradigma desain arsitektur yang memisahkan aplikasi menjadi tiga komponen utama yaitu model (data dan logika bisnis), view (tampilan), dan controller (pengontrol aliran data).
+2. MVT (Model-View-Template) adalah paradigma desain arsitektur yang merupakan variasi dari MVC yang digunakan dalam kerangka kerja Django, di mana model (data dan logika bisnis) tetap sama, view (tampilan) lebih berfokus pada presentasi data, dan template digunakan untuk memisahkan logika presentasi.
+3. MVVM (Model-View-ViewModel) adalah paradigma desain arsitektur yang memisahkan aplikasi menjadi tiga komponen utama yaitu model (data dan logika bisnis), view (tampilan), dan ViewModel (perantara antara Model dan View yang mengelola tampilan data dan logika presentasi).
