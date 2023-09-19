@@ -9,12 +9,15 @@
     <h5>Class:</h5>
     <p>{{class}}</p>
 
+    <h5>Kamu memiliki {{banyak_jenis}} item dengan total {{banyak_item}} buah pada aplikasi ini</h6>
+
 
     <table>
         <tr>
             <th>Name</th>
             <th>Amount</th>
             <th>Description</th>
+            <th>Price</th>
             <th>Date Added</th>
         </tr>
     
@@ -23,8 +26,9 @@
         {% for item in items %}
             <tr>
                 <td>{{item.name}}</td>
-                <td>{{item.price}}</td>
+                <td>{{item.amount}}</td>
                 <td>{{item.description}}</td>
+                <td>{{item.price}}</td>
                 <td>{{item.date_added}}</td>
             </tr>
         {% endfor %}

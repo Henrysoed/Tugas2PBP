@@ -13,7 +13,7 @@ from main.models import Item
 class ItemForm(ModelForm):
     class Meta:
         model = Item
-        fields = ["name", "amount", "description"]
+        fields = ["name", "amount", "price", "description"]
 ```
 
 ## Melakukan render form yang dibuat
@@ -97,6 +97,11 @@ Form **GET** digunakan untuk mengambil data dari server dan menampilkan hasilnya
 JSON sering digunakan dalam pertukaran data antara aplikasi web modern karena formatnya yang ringan, mudah dibaca, dan fleksibel, yang memungkinkan pengembang untuk menyimpan dan mengirim data dengan efisien, terutama dalam konteks aplikasi API. Selain itu, JSON didukung oleh sebagian besar bahasa pemrograman, memudahkan konversi data antara berbagai aplikasi, dan kompatibel dengan JavaScript, yang umum digunakan dalam pengembangan web, sehingga mempermudah pemrosesan data di sisi klien.
 
 # Postman Screenshot
+Gambaran response untuk `html`
+<div style='display: flex;'>
+    <img src='doc/example_Html.jpg' width=50%>
+</div>
+
 Gambaran response untuk `/xml` dan `/xml/1`
 <div style='display: flex;'>
     <img src='doc/example_xml.jpg' width=50%>

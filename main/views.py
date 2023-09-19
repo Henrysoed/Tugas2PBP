@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.core import serializers
 from main.models import Item
+from django.db.models import Sum
 
 def show_main(request):
     items = Item.objects.all()
@@ -12,7 +13,9 @@ def show_main(request):
     context = {
         'name': 'Henry Soedibjo', # Nama kamu
         'class': 'PBP A', # Kelas PBP kamu
-        'item': items
+        'banyak_jenis' : len(items),
+        'banyak_item' : Item.objects.aggregate(total=Sum('amount'))['total'],
+        'items': items
     }
 
     return render(request, "main.html", context)
