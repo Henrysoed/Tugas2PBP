@@ -102,15 +102,23 @@ Gambaran response untuk `html`
     <img src='doc/example_Html.jpg' width=50%>
 </div>
 
-Gambaran response untuk `/xml` dan `/xml/1`
+Gambaran response untuk `/xml` 
 <div style='display: flex;'>
     <img src='doc/example_xml.jpg' width=50%>
+</div>
+
+Gambaran response untuk `/xml/2`
+<div style='display: flex;'>
     <img src='doc/example_xml_1.jpg' width=50%>
 </div>
 
-Gambaran response untuk `/json` dan `/json/1`
+Gambaran response untuk `/json`
 <div style='display: flex;'>
     <img src='doc/example_json.jpg' width=50%>
+</div>
+
+Gambaran response untuk `/json/2`
+<div style='display: flex;'>
     <img src='doc/example_json_1.jpg' width=50%>
 </div>
 
