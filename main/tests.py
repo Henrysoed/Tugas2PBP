@@ -1,5 +1,4 @@
 from django.test import TestCase, Client
-from django.urls import reverse
 
 class mainTest(TestCase):
     def test_main_url_is_exist(self):
@@ -11,7 +10,7 @@ class mainTest(TestCase):
         self.assertTemplateUsed(response, 'main.html')
 
     def test_main_html_content(self):
-        response = self.client.get(reverse('main.html')) 
+        response = self.client.get('/main/')
 
         # Memeriksa apakah halaman berhasil dimuat (status kode 200)
         self.assertEqual(response.status_code, 200)
