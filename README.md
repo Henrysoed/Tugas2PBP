@@ -244,7 +244,46 @@ def logout_user(request):
 ...
 ```
 ## 7. Bonus: Add Button & Minus Button
-
++ Tambahkan widget button pada file `main.html`
+```
+...
+<th scope="col" class="text-center"> - Amount </th>
+<th scope="col" class="text-center"> + Amount </th>
+<th scope="col" class="text-center"> Delete </th>
+...
+```
++ Tambahkan fungsi `add`
+```
+def add(request, id):
+    a = Item.objects.get(pk=id)
+    a.amount += 1
+    a.save()
+    return redirect('main:show_main')
+```
++ Tambahkan fungsi `remove`
+```
+def remove(request, id):
+    data = Item.objects.get(pk=id)
+    if(data.amount>0):
+        data.amount -= 1
+        data.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+    data.save()
+    return HttpResponseRedirect(reverse('main:show_main'))
+```
++ Tambahkan fungsi `remove_all`
+```
+def remove_all(request, id):
+    a = Item.objects.get(pk=id)
+    a.delete()
+    return redirect('main:show_main')
+```
++ Tambahkan path pada file `urls.py`
+```
+    path('add/<int:id>/', add, name='add'),
+    path('remove/<int:id>/', remove, name='remove'),
+    path('remove-all/<int:id>/', remove_all, name='remove_all'),
+```
 
 ## Migrasi
 + Buka terminal baru dan lakukan `python manage.py makemigrations`
@@ -252,11 +291,25 @@ def logout_user(request):
 + Ketik angka 1 kembali untuk menetapkan dengan user ID 1
 + Lakukan `python manage.py migrate`
 
-
-
-
-
 ## Membuat 2 akun user dengan 3 dummy data
++ Untuk membuat dua akun pengguna, jalankan server di lokal kemudian klik 'Register Now' dan masukkan username dan password untuk membuat dua akun
+```
+ Akun 1:
+ Username: henry1
+ Password: henrysoed
+
+ Akun 2:
+ Username: henry2
+ Password: henrysoed
+```
++ Untuk membuat 3 dummy data, login terlebih dahulu ke akun yang sudah dibuat kemudian tekan tombol Add New Item kemudian isi field name, amount, dan description sebanyak 3 kali.
++ Dokumentasi:
+<div style='display: flex;'>
+    <img src='doc/henry1.jpg' width=50%>
+</div>
+<div style='display: flex;'>
+    <img src='doc/henry2.jpg' width=50%>
+</div>
 
 
 ## Django UserCreationForm
@@ -296,7 +349,8 @@ Penggunaan cookies dalam pengembangan web tidak selalu aman secara default, dan 
 
 -----
 
-<h1>Tugas 3</h1>
+<details>
+<summary>Tugas 3</summary>
 
 # Langkah-langkah
 
@@ -421,7 +475,10 @@ Gambaran response untuk `/json/2`
 
 -----
 
-<h1>Tugas 2</h1>
+</details>
+
+<details>
+<summary>Tugas 2</summary>
 
 # Langkah-langkah
 
@@ -550,3 +607,4 @@ Virtual environment digunakan dalam pengembangan aplikasi web berbasis Django un
 1. MVC (Model View Controller) adalah paradigma desain arsitektur yang memisahkan aplikasi menjadi tiga komponen utama yaitu model (data dan logika bisnis), view (tampilan), dan controller (pengontrol aliran data).
 2. MVT (Model-View-Template) adalah paradigma desain arsitektur yang merupakan variasi dari MVC yang digunakan dalam kerangka kerja Django, di mana model (data dan logika bisnis) tetap sama, view (tampilan) lebih berfokus pada presentasi data, dan template digunakan untuk memisahkan logika presentasi.
 3. MVVM (Model-View-ViewModel) adalah paradigma desain arsitektur yang memisahkan aplikasi menjadi tiga komponen utama yaitu model (data dan logika bisnis), view (tampilan), dan ViewModel (perantara antara Model dan View yang mengelola tampilan data dan logika presentasi).
+</details>

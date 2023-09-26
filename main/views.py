@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from main.forms import ItemForm
 from django.urls import reverse
-from django.http import HttpResponse
 from django.core import serializers
 from main.models import Item
 from django.db.models import Sum
@@ -13,8 +12,6 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 import datetime
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 
 @login_required(login_url='/login')
 def show_main(request):
@@ -35,9 +32,14 @@ def create_item(request):
     form = ItemForm(request.POST or None)
 
     if form.is_valid() and request.method == "POST":
-        product = form.save(commit=False)
-        product.user = request.user
-        product.save()
+        item = form.save(commit=False)
+        item.user = request.user
+        item.save()
+    
+        # Mengeluarkan pesan sukses menyimpan item
+        item_name = form.cleaned_data['name']
+        item_amount = form.cleaned_data['amount']
+        messages.success(request, f"Kamu berhasil menyimpan {item_name} sebanyak {item_amount}.")
         return HttpResponseRedirect(reverse('main:show_main'))
 
     context = {'form': form}
@@ -91,3 +93,23 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def add(request, id):
+    a = Item.objects.get(pk=id)
+    a.amount += 1
+    a.save()
+    return redirect('main:show_main')
+
+def remove(request, id):
+    data = Item.objects.get(pk=id)
+    if(data.amount>0):
+        data.amount -= 1
+        data.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+    data.save()
+    return HttpResponseRedirect(reverse('main:show_main'))
+
+def remove_all(request, id):
+    a = Item.objects.get(pk=id)
+    a.delete()
+    return redirect('main:show_main')

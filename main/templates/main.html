@@ -9,16 +9,19 @@
     <h5>Class:</h5>
     <p>{{class}}</p>
 
-    <h5>Kamu memiliki {{banyak_jenis}} item dengan total {{banyak_item}} buah pada aplikasi ini</h6>
+    <h5>Kamu memiliki {{banyak_jenis}} item pada aplikasi ini</h6>
 
 
     <table>
         <tr>
-            <th>Name</th>
-            <th>Amount</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Date Added</th>
+            <th scope="col">Name</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Date Added</th>
+            <th scope="col" class="text-center"> - Amount </th>
+            <th scope="col" class="text-center"> + Amount </th>
+            <th scope="col" class="text-center"> Delete </th>
         </tr>
     
         {% comment %} Berikut cara memperlihatkan data item di bawah baris ini {% endcomment %}
@@ -29,7 +32,10 @@
                 <td>{{item.amount}}</td>
                 <td>{{item.description}}</td>
                 <td>{{item.price}}</td>
-                <td>{{item.date_added}}</td>    
+                <td>{{item.date_added}}</td>
+                <td><a href="/remove/{{item.pk}}/"><button>-</button></a></td>
+                <td><a href="/add/{{item.pk}}/"><button>+</button></a></td>
+                <td><a href="/remove-all/{{item.pk}}/"><button>Delete</button></a></td>
             </tr>
         {% endfor %}
     </table>
