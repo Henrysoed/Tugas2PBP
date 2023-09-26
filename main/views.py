@@ -16,12 +16,15 @@ import datetime
 @login_required(login_url='/login')
 def show_main(request):
     items = Item.objects.filter(user=request.user)
+    temp = sum([x.amount for x in items])
+    if(len(items) == 0):
+        temp = 0
 
     context = {
         'name': request.user.username,
         'class': 'PBP A', # Kelas PBP kamu
         'banyak_jenis' : len(items),
-        'banyak_item' : Item.objects.aggregate(total=Sum('amount'))['total'],
+        'banyak_item' : temp,
         'items': items,
         'last_login': request.COOKIES['last_login'],
     }
