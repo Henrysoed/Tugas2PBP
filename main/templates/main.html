@@ -1,59 +1,82 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Investment Portofolio Inventory</h1>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Investment Portfolio Inventory</h1>
 
-    <h5>Name:</h5>
-    <p>{{name}}</p>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Name:</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>{{name}}</p>
+                    </div>
+                </div>
 
-    <h5>Class:</h5>
-    <p>{{class}}</p>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Class:</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>{{class}}</p>
+                    </div>
+                </div>
 
-    <h5>Kamu memiliki {{banyak_jenis}} item dengan {{banyak_item}} buah pada aplikasi ini</h6>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Total Items:</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>{{banyak_jenis}} item dengan {{banyak_item}} buah</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <h3>Inventory List</h3>
 
-    <table>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Description</th>
-            <th scope="col">Price</th>
-            <th scope="col">Date Added</th>
-            <th scope="col" class="text-center"> - Amount </th>
-            <th scope="col" class="text-center"> + Amount </th>
-            <th scope="col" class="text-center"> Delete </th>
-        </tr>
-    
-        {% comment %} Berikut cara memperlihatkan data item di bawah baris ini {% endcomment %}
-    
-        {% for item in items %}
-            <tr>
-                <td>{{item.name}}</td>
-                <td>{{item.amount}}</td>
-                <td>{{item.description}}</td>
-                <td>{{item.price}}</td>
-                <td>{{item.date_added}}</td>
-                <td><a href="/remove/{{item.pk}}/"><button>-</button></a></td>
-                <td><a href="/add/{{item.pk}}/"><button>+</button></a></td>
-                <td><a href="/remove-all/{{item.pk}}/"><button>Delete</button></a></td>
-            </tr>
-        {% endfor %}
-    </table>
-    
-    <br />
+        <div class="cards">
+            {% for item in items %}
+            <div class="card {% if forloop.last %}new-card{% endif %}">
+                <h3>{{ item.name }}</h3>
+                <p>Price: {{ item.price }}</p>
+                <p>Description: {{ item.description }}</p>
+                <p>Amount: {{ item.amount }}</p>
+                <p>Date Added: {{item.date_added}}</p>
+                <div class="card-buttons">
+                    <a href="/remove/{{item.pk}}/">
+                        <button class="btn btn-danger">Remove</button>
+                    </a>
+                    <a href="/add/{{item.pk}}/">
+                        <button class="btn btn-success">Add</button>
+                    </a>
+                    <a href="/remove-all/{{item.pk}}/">
+                        <button class="btn btn-warning">Delete</button>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
 
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
-    
-    <a href="{% url 'main:create_item' %}">
-        <button>
-            Add New Item
-        </button>
-    </a>
+        <h5>Last Login: {{ last_login }}</h5>
+        
+        <a href="{% url 'main:create_item' %}" class="btn btn-primary">Add New Item</a>
 
-    <a href="{% url 'main:logout' %}">
-        <button>
-            Logout
-        </button>
-    </a>
+        <a href="{% url 'main:logout' %}" class="btn btn-secondary">Logout</a>
+    </div>
 
+    <style>
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .new-card {
+        background-color: #e8f8ff; /* Warna latar belakang card terbaru */
+        }
+    </style>
 {% endblock content %}
