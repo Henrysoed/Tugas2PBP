@@ -1,2 +1,2 @@
 release: django-admin migrate --noinput
-web: gunicorn TUGAS2.wsgi
+web: gunicorn Tugas2PBP.wsgi
