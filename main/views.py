@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, HttpResponseNotFound
 from main.forms import ItemForm
 from django.urls import reverse
 from django.core import serializers
@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 import datetime
 
 @login_required(login_url='/login')
@@ -112,7 +113,34 @@ def remove(request, id):
     data.save()
     return HttpResponseRedirect(reverse('main:show_main'))
 
-def remove_all(request, id):
-    a = Item.objects.get(pk=id)
-    a.delete()
-    return redirect('main:show_main')
+# def remove_all(request, id):
+#     a = Item.objects.get(pk=id)
+#     a.delete()
+#     return redirect('main:show_main')
+
+def get_item_json(request):
+    item_item = Item.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', item_item))
+
+@csrf_exempt
+def add_item_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        price = request.POST.get("price")
+        amount = request.POST.get("amount")
+        description = request.POST.get("description")
+        user = request.user
+
+        new_item = Item(name=name, price=price, amount=amount, description=description, user=user)
+        new_item.save()
+
+        return HttpResponse(b"CREATED", status=201)
+    return HttpResponseNotFound()
+
+@csrf_exempt
+def delete_item_ajax(request, id):
+    if request.method == 'DELETE':
+        a = Item.objects.get(pk=id)
+        a.delete()
+        return HttpResponse(b"DELETE", status=201)
+    return HttpResponseNotFound()

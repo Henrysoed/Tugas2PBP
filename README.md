@@ -1,6 +1,10 @@
 [Investment Portofolio Inventory Application Link](https://investment-portofolio-inventory.adaptable.app)
+<h1>Tugas 6</h1>
 
-<h1>Tugas 5</h1>
+
+
+<details>
+<summary>Tugas 5</summary>
 
 ## Manfaat Elemen Selector dan Waktu Penggunaan nya
 1. Element Selector
@@ -33,6 +37,7 @@ Perbedaan utamanya terletak pada pendekatan desain dan kompleksitas penggunaan. 
 Bootstrap cocok untuk proyek-proyek yang membutuhkan desain cepat dengan komponen-komponen siap pakai dan dokumenasi yang kuat. Tailwind cocok untuk proyek-proyek yang membutuhkan kontrol yang lebih besar terhadap tampilan dan desain yang sangat disesuaikan. Tailwind memungkinkan pengembang untuk membuat tampilan yang unik dari awal dengan lebih mudah, tetapi memerlukan penulisan lebih banyak kode dibandingkan Bootstrap. Oleh karena itu, pemilihan antara keduanya tergantung pada tingkat kontrol dan kompleksitas desain yang dibutuhkan dalam proyek 
 
 -----
+</details>
 
 <details>
 <summary>Tugas 4</summary>

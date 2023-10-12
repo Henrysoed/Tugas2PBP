@@ -1,6 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    #item_table {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: 15px;
+        column-gap: 15px;
+    }
+</style>
+<nav class="navbar bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Henry Soedibjo</span>
+    <a href="{% url 'main:logout' %}">
+        <form class="container-fluid justify-content-start">
+            <button class="btn btn-outline-success me-2" type="button">Log Out</button>
+        </form>
+    </a>
+    </div>
+</nav>
     <div class="container mt-4">
         <h1 class="text-center mb-4">Investment Portfolio Inventory</h1>
 
@@ -37,28 +55,45 @@
 
         <h3>Inventory List</h3>
 
-        <div class="cards">
-            {% for item in items %}
-            <div class="card {% if forloop.last %}new-card{% endif %}">
-                <h3>{{ item.name }}</h3>
-                <p>Price: {{ item.price }}</p>
-                <p>Description: {{ item.description }}</p>
-                <p>Amount: {{ item.amount }}</p>
-                <p>Date Added: {{item.date_added}}</p>
-                <div class="card-buttons">
-                    <a href="/remove/{{item.pk}}/">
-                        <button class="btn btn-danger">Remove</button>
-                    </a>
-                    <a href="/add/{{item.pk}}/">
-                        <button class="btn btn-success">Add</button>
-                    </a>
-                    <a href="/remove-all/{{item.pk}}/">
-                        <button class="btn btn-warning">Delete</button>
-                    </a>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form" onsubmit="return false;">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="name" class="col-form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" name="name"></input>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="col-form-label">Price:</label>
+                                <input type="number" class="form-control" id="price" name="price"></input>
+                            </div>
+                            <div class="mb-3">
+                                <label for="amount" class="col-form-label">Amount:</label>
+                                <input type="number" class="form-control" id="amount" name="amount"></input>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="col-form-label">Description:</label>
+                                <textarea class="form-control" id="description" name="description"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add item</button>
+                    </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
+
+        <div class="cards" id="item_table"></div>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add item by AJAX</button>
 
         <h5>Last Login: {{ last_login }}</h5>
         
@@ -66,6 +101,63 @@
 
         <a href="{% url 'main:logout' %}" class="btn btn-secondary">Logout</a>
     </div>
+
+    <script>
+        async function getItems() {
+            return fetch("{% url 'main:get_item_json' %}").then((res) => res.json())
+        }
+        
+        async function refreshitems() {
+        document.getElementById("item_table").innerHTML = ""
+        const items = await getItems()
+        let htmlString = ``
+        
+        items.map((item, i) => {
+            htmlString += `\n
+            <div class="card ${i === items.length - 1 ? 'new-card' : ''}">
+                    <h3>${item.fields.name}</h3>
+                    <p>Description: ${item.fields.description}</p>
+                    <p>Amount: ${item.fields.amount}</p>
+                    <p>Date Added: ${item.fields.date_added}</p>
+                    <div class="card-buttons">
+                        <a href="/remove/${item.pk}/">
+                            <button class="btn btn-danger">Remove</button>
+                        </a>
+                        <a href="/add/${item.pk}/">
+                            <button class="btn btn-success">Add</button>
+                        </a>
+                        <a>
+                            <button class="btn btn-warning" onclick = deleteItem(${item.pk})>Delete</button>
+                        </a>
+                    </div>
+                </div>` 
+            })
+            
+            document.getElementById("item_table").innerHTML = htmlString
+            }
+
+            refreshitems()
+
+            function addItem() {
+                fetch("{% url 'main:add_item_ajax' %}", {
+                    method: "POST",
+                    body: new FormData(document.querySelector('#form'))
+                }).then(refreshitems)
+
+                document.getElementById("form").reset()
+                return false
+            }
+
+            function deleteItem(itemId){
+                fetch(`/delete-ajax/${itemId}/`, {
+                    method: "DELETE",
+                }).then(refreshitems)
+                return false
+            }
+            
+            document.getElementById("button_add").onclick = addItem
+
+    </script>
 
     <style>
         .cards {
