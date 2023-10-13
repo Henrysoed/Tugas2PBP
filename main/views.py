@@ -113,10 +113,10 @@ def remove(request, id):
     data.save()
     return HttpResponseRedirect(reverse('main:show_main'))
 
-# def remove_all(request, id):
-#     a = Item.objects.get(pk=id)
-#     a.delete()
-#     return redirect('main:show_main')
+def remove_all(request, id):
+    a = Item.objects.get(pk=id)
+    a.delete()
+    return redirect('main:show_main')
 
 def get_item_json(request):
     item_item = Item.objects.filter(user=request.user)
