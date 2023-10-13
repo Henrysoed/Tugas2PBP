@@ -194,6 +194,88 @@ Pilihan antara Fetch API dan jQuery sangat tergantung pada kebutuhan proyek. Jik
 <details>
 <summary>Tugas 5</summary>
 
+## Implementasi
+1. Kustomisasi halaman login dan register
+Pada halaman login dan register, ide design saya kurang lebih mirip. Saya mencari template Bootstrap yang ada di internet, lalu saya coba untuk ubah sedikit-sedikit dan merapikannya dalam bentuk yang saya inginkan. Untuk isi kode dari keduanya dapat dilihat dalam folder main/templates. Terdapat juga beberapa implementasi CSS murni dalam internal dan juga inline code. Untuk sekarang model ini yang akan saya gunakan dan saya harap kedepannya masih dapat saya improve.
+
+2. Kustomisasi Tampilan `main.html` cards
+```
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Investment Portfolio Inventory</h1>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Name:</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>{{name}}</p>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Class:</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>{{class}}</p>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Total Items:</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>{{banyak_jenis}} item dengan {{banyak_item}} buah</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3>Inventory List</h3>
+
+        <div class="cards">
+            {% for item in items %}
+            <div class="card {% if forloop.last %}new-card{% endif %}">
+                <h3>{{ item.name }}</h3>
+                <p>Price: {{ item.price }}</p>
+                <p>Description: {{ item.description }}</p>
+                <p>Amount: {{ item.amount }}</p>
+                <p>Date Added: {{item.date_added}}</p>
+                <div class="card-buttons">
+                    <a href="/remove/{{item.pk}}/">
+                        <button class="btn btn-danger">Remove</button>
+                    </a>
+                    <a href="/add/{{item.pk}}/">
+                        <button class="btn btn-success">Add</button>
+                    </a>
+                    <a href="/remove-all/{{item.pk}}/">
+                        <button class="btn btn-warning">Delete</button>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+```
++ Menambahkan `<style>` untuk css card
+```
+    <style>
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .new-card {
+        background-color: #e8f8ff; /* Warna latar belakang card terbaru */
+        }
+    </style>
+```
+
 ## Manfaat Elemen Selector dan Waktu Penggunaan nya
 1. Element Selector
 + Manfaat: Memilih semua elemen dengan jenis tertentu di dalam dokumen HTML.
