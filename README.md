@@ -147,6 +147,14 @@ Pada file `main.html` tambahkan kode berikut
 ```
  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add item by AJAX</button>
 ```
+
+## Menjalankan perintah collectstatic
+Bukalah file `settings.py` dan tambahkan kode berikut setelah `STATIC_URL`
+```
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+```
+Dengan menjalankan python manage.py collectstatic maka akan terbuat sebuah direktori baru dalam direktori root bernama static karena ini yang kita petakan pada STATIC_ROOT. Jadi perintah ini menggabungkan semua file statis dari berbagai aplikasi dan direktori ke dalam satu folder khusus yang siap untuk disajikan oleh server web.
+
 -----
 ## Perbedaan Asynchronous Programming dengan Synchronous Programming
 1. Synchronous Programming
